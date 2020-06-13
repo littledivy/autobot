@@ -18,8 +18,12 @@ export default async function Handler(msg: MESSAGE_CREATE): Promise<any> {
 
       default:
       if(msg.content.startsWith("!")) {
-        if(typeof (pilot as any)[msg.content] === 'function') {
-          await msg.reply(`Executing...`)
+        let func = msg.content.split("!").join("").trim().split(" ")[0];
+        let args = msg.content.split("!").join("").trim().split(" ");
+        args.shift();
+        if(typeof (pilot as any)[func] === 'function') {
+          await msg.reply(`Executing...`);
+          (pilot as any)[func].apply(pilot as any, args);
           return resolve();
         }
         await msg.reply(`No method ${msg.content} found`)
