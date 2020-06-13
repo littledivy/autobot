@@ -73,7 +73,11 @@ for await (const ctx of client) {
     case ev.Message: {
       const msg: MESSAGE_CREATE = ctx;
       if (msg.author.id !== client.user.id) {
-        await handle(msg);
+        handle(msg)
+        .then(async res => {
+          console.log(res);
+          if(res) await msg.reply("```js\n"+JSON.stringify(res)+"\n```");
+        })
       }
       break;
     }

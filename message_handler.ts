@@ -23,8 +23,8 @@ export default async function Handler(msg: MESSAGE_CREATE): Promise<any> {
         args.shift();
         if(typeof (pilot as any)[func] === 'function') {
           await msg.reply(`Executing...`);
-          (pilot as any)[func].apply(pilot as any, args);
-          return resolve();
+          let res = (pilot as any)[func].apply(pilot as any, args);
+          return resolve(res);
         }
         await msg.reply(`No method ${msg.content} found`)
         return resolve();
